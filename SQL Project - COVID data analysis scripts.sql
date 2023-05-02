@@ -140,7 +140,9 @@ from #PopulationVaccinatePercentage
 
 --Creating View to store data for later visualizations
 
-Create view PopulationVaccinatedPercentage as
+Use PortfolioProject
+GO
+Create view PopulationVaccinatPercentage as
 select cd.continent, cd.location, cd.date, cd.population, cv.new_vaccinations,
 SUM(CONVERT(bigint,cv.new_vaccinations)) OVER (Partition by cd.location order by cd.location,
 cd.date) as RollingPeopleVaccinated
@@ -149,3 +151,7 @@ join PortfolioProject..CovidVaccinations as cv
 	on cd.location = cv.location
 	and cd.date = cd.date
 where cd.continent is not null
+
+
+select *
+from PopulationVaccinatPercentage
